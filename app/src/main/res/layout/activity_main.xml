@@ -20,8 +20,16 @@
             android:text="Welcome Adventurer.  What is your name?" />
 
         <EditText
+            android:id="@+id/name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"/>
+
+        <Button
+            android:id="@+id/gobutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go!"/>
 
     </LinearLayout>
 
