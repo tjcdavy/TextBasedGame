@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Text Based Game</string>
-    <string name="intro_speech">Well then  You are hereby invited to explore my little dungeon ;)</string>
+    <string name="player_name">Name</string>
 </resources>
