@@ -110,12 +110,75 @@ public class Game extends AppCompatActivity{
     }
 
     public void attack(int attackType){
+        int damage; //The damage the player will deal
+
         switch(attackType){
             case 1:
-
+                //Sword
+                if(currentWeapon <= 3){
+                    damage = ((int)(Math.random()*5+1))*(currentWeapon*10);
+                }else if(currentWeapon > 3 && currentWeapon >= 6){
+                    damage = ((int)(Math.random()*10+1))*(currentWeapon*10);
+                }else{
+                    damage = ((int)(Math.random()*10+6))*(currentWeapon*10);
+                }
+                updateGame(damage);
+                break;
             case 2:
+                //Hands
 
+                //For a punch
+                handsPunch.setVisibility(View.VISIBLE);
+                handsPunch.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int damage = ((int)(Math.random()*40+1)*10);
+                        updateGame(damage);
+                    }
+                });
+
+                //For a slap
+                handsSlap.setVisibility(View.VISIBLE);
+                handsSlap.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        handsPunch.setVisibility(View.GONE);
+
+                        //Bitch slap
+                        slapBitch.setVisibility(View.VISIBLE);
+                        slapBitch.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int damage = ((int)(Math.random()*30+1))*10;
+                                if(enemy[currentBadGuy -1].type.equals("Troll")){
+                                    damage = damage * 2;
+                                }
+                                updateGame(damage);
+                            }
+                        });
+
+                        //Pimp slap
+                        slapPimp.setVisibility(View.VISIBLE);
+                        slapPimp.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int damage = ((int)(Math.random()*50+1))*10;
+                                if(enemy[currentBadGuy -1].type.equals("Minotaur")){
+                                    damage = damage * 2;
+                                }
+                                updateGame(damage);
+                            }
+                        });
+                    }
+                });
+                break;
             case 3:
+                //Magic
+                if(currentSpell==0){
+
+                }else{
+
+                }
         }
     }
 
@@ -145,7 +208,7 @@ public class Game extends AppCompatActivity{
     /**
      * Called after each turn to update the states and variables of everything
      */
-    public void updateGame(){
+    public void updateGame(int damage){
 
     }
 
