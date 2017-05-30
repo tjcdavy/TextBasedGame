@@ -13,28 +13,58 @@
             android:layout_height="wrap_content"
             android:text="You"
             android:textStyle="bold"
-            android:textSize="30dp"
-            android:gravity="left"
+            android:textSize="30sp"
+            android:gravity="start"
             android:layout_weight="1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/badguy"
+            android:id="@+id/badguy_name"
             android:text="Baddie"
             android:textStyle="bold"
-            android:textSize="30dp"
-            android:gravity="right"
+            android:textSize="30sp"
+            android:gravity="end"
             android:layout_weight="1"/>
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Person"
+            android:textSize="20sp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/badguy_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/player_health"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1000"
@@ -51,9 +81,9 @@
             android:layout_centerInParent="true" />
 
         <TextView
+            android:id="@+id/badguy_health"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/badguy_health"
             android:text="Baddie"
             android:textSize="20sp"
             android:layout_alignParentRight="true"
@@ -63,10 +93,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content" >
 
         <TextView
+            android:id="@+id/player_weapon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Butter Knife"
@@ -83,11 +113,11 @@
             android:layout_centerInParent="true" />
 
         <TextView
+            android:id="@+id/badguy_weapon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Weapon"
+            android:text="Hands"
             android:textSize="20sp"
-            android:gravity="right"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"/>
 
@@ -95,15 +125,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/player_magic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nothing"
             android:textSize="20sp"
-            android:gravity="left"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true" />
 
@@ -120,7 +149,6 @@
             android:layout_height="wrap_content"
             android:text="Nothing"
             android:textSize="20sp"
-            android:gravity="right"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"/>
 
@@ -130,11 +158,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="How do you want to attack?"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:paddingTop="50dp"
         android:gravity="center"/>
 
     <Button
+        android:id="@+id/attack_weapon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Weapon" />
@@ -145,29 +174,34 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/attack_fists"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fists" />
 
         <Button
+            android:id="@+id/fists_punch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Punch"
             android:visibility="gone" />
 
         <Button
+            android:id="@+id/fists_slap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Slap"
             android:visibility="gone" />
 
         <Button
+            android:id="@+id/slap_pimp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pimp Slap"
             android:visibility="gone" />
 
         <Button
+            android:id="@+id/slap_bitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bitch Slap"
@@ -181,11 +215,13 @@
         android:orientation="horizontal" >
 
         <Button
+            android:id="@+id/attack_magic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Magic" />
 
         <TextView
+            android:id="@+id/no_spells"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="You don't know any spells."
@@ -198,11 +234,13 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/run_away"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Run Away"/>
 
         <LinearLayout
+            android:id="@+id/run_away_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -220,6 +258,7 @@
                 android:orientation="horizontal" >
 
                 <Button
+                    android:id="@+id/run_away_yes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Yes"
@@ -227,6 +266,7 @@
                     android:layout_weight="1"/>
 
                 <Button
+                    android:id="@+id/run_away_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
