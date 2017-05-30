@@ -18,9 +18,9 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/badguy_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/badguy_name"
             android:text="Baddie"
             android:textStyle="bold"
             android:textSize="30sp"
@@ -174,20 +174,20 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/attack_fists"
+            android:id="@+id/attack_hands"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fists" />
+            android:text="Hands" />
 
         <Button
-            android:id="@+id/fists_punch"
+            android:id="@+id/hands_punch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Punch"
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/fists_slap"
+            android:id="@+id/hands_slap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Slap"

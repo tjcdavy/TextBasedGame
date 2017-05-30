@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     public String name;
+    public Boolean instant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
         Button nameButton = (Button) findViewById(R.id.namebutton);
         Button goButton = (Button) findViewById(R.id.gobutton);
+
+        instant = null;
 
         nameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,11 +44,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void switchLayout(){
+        checkName(name);
         TextView newText = (TextView) findViewById(R.id.intro_speech);
         String pt1 = getResources().getString(R.string.intro);
         String pt2 = getResources().getString(R.string.intro2);
         String finalText = new String("Well then, " + name + ", "+ pt1 + "\n" + pt2);
         newText.setText(finalText);
+    }
+
+    public void checkName(String toCheck){
+        toCheck = toCheck.toLowerCase();
+        if(toCheck.equals("neo")){
+            name = "Mr. Anderson";
+        }else if(toCheck.equals("tristan")){
+            instant = true;
+        }else if(toCheck.equals("ben")){
+            instant = false;
+        }
     }
 
 }
