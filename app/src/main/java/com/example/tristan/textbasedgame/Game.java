@@ -1,6 +1,5 @@
 package com.example.tristan.textbasedgame;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -43,9 +42,9 @@ public class Game extends AppCompatActivity{
 
     LinearLayout runAwayLayout; //The layout containing the confirmation buttons for running away
 
-    TextView bonusBox, bonusBox2; //The textfields explaining the bonus box
+    TextView bonusBox, bonusBox2, bonusMore; //The textfields explaining the bonus box
 
-    Button bonusYes, bonusNo; //Buttons for accepting or denying the bonus box
+    Button bonusYes, bonusNo, bonusContinue; //Buttons for accepting or denying the bonus box
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,9 +120,11 @@ public class Game extends AppCompatActivity{
 
         bonusBox = (TextView) findViewById(R.id.box_text);
         bonusBox2 = (TextView) findViewById(R.id.box_text2);
+        bonusMore = (TextView) findViewById(R.id.bonus_after_text);
 
         bonusYes = (Button) findViewById(R.id.prize_yes);
         bonusNo = (Button) findViewById(R.id.prize_no);
+        bonusContinue = (Button) findViewById(R.id.bonus_after_button);
 
         start(currentBadGuy-1); //Starts with the first bad guy
 
@@ -263,7 +264,25 @@ public class Game extends AppCompatActivity{
      */
     public void updateGame(int damage){
         hideAppropriate();
+        String attackSpiel = "Your attack dealt " + damage + " damage.";
+        enemy[currentBadGuy-1].health -= damage;
+        String enemySpiel;
 
+        if(enemy[currentBadGuy-1].health > 0){
+            int enemyDamage = ((int)(Math.random()*10+1))*enemy[currentBadGuy -1].damageMult;
+            health -= enemyDamage;
+            enemySpiel = "The enemy dealt " + enemyDamage + " damage";
+            if(health > 0){
+                playerHealth.setText(health);
+                enemySpiel += ".";
+            }else{
+                gameGoing = Finished.LOSS;
+                enemySpiel += " and killed you.";
+            }
+        }else{
+            enemySpiel = "You defeated them, congratulations.";
+        }
+        
     }
 
     public void hideAppropriate(){
@@ -287,6 +306,7 @@ public class Game extends AppCompatActivity{
         String output2;
         switch (turn){
             case 1:
+                //Generates a weapons box
                 output += "it is a weapons box.";
                 output2 = "Would you like to open it and take the weapon inside? (Bear in mind this will replace your current weapon)";
                 bonusYes.setOnClickListener(new View.OnClickListener() {
@@ -294,34 +314,58 @@ public class Game extends AppCompatActivity{
                     public void onClick(View v) {
                         int turn;
                         turn = (int)(Math.random()*7+1);
+                        String text;
                         if(turn == 3 || turn == 6){
-                            System.out.println("You have replaced your " + weapons[currentWeapon] + " with " + weapons[turn]);
+                            text = "You have replaced your " + weapons[currentWeapon] + " with " + weapons[turn];
                         }else{
-                            System.out.println("You have replaced your " + weapons[currentWeapon] + " with a " + weapons[turn]);
+                            text = "You have replaced your " + weapons[currentWeapon] + " with a " + weapons[turn];
                         }
+                        bonusMore.setText(text);
                         currentWeapon = turn;
+                        switchBonus();
                     }
                 });
+                String nope = "So you decide to stick with your trusty " + weapons[currentWeapon] + ".  Fair Enough, I guess we'll never know if it was better";
+                setNoButton(nope);
                 break;
             case 2:
+                //Generates a spell box
                 output += "it is a spell box.";
                 output2 = "Would you like to open it and learn the spell inside? (Bear in mind this will replace your current spell)";
                 bonusYes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        int turn = (int)(Math.random()*7+1);
+                        String text;
+                        if(currentSpell == 0){
+                            text = "You have learnt the " + spells[turn] + " spell.";
+                        }else{
+                            text = "You have replaced your " + spells[currentSpell] + " spell with " + spells[turn];
+                        }
+                        bonusMore.setText(text);
+                        currentSpell = turn;
+                        switchBonus();
                     }
                 });
+                String nopey = "So you decide to stick with your trusty " + spells[currentSpell] + ".  Fair Enough, I guess we'll never know if it was better";
+                setNoButton(nopey);
                 break;
             case 3:
+                //Generates a health box
                 output += "it is a health potion box.";
                 output2 = "Would you like to drink it? (You can't take it with you to drink later)";
                 bonusYes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        int turn = ((int)(Math.random()*10+1))*100;
+                        health += turn;
+                        String text = "You have added " + turn + " to your health, to bring it up to " + health;
+                        bonusMore.setText(text);
+                        switchBonus();
                     }
                 });
+                String moreNope = "That's pretty brave.  Respect.";
+                setNoButton(moreNope);
                 break;
             default:
                 turn = (int)(Math.random()*3+1);
@@ -334,7 +378,30 @@ public class Game extends AppCompatActivity{
 
     }
 
-    public void setNoButton(int type, String text){
+    public void setNoButton(final String text){
+        bonusNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bonusMore.setText(text);
+                switchBonus();
+            }
+        });
+    }
+
+    public void switchBonus(){
+        LinearLayout bonusLayout1 = (LinearLayout) findViewById(R.id.prize_layout);
+        final LinearLayout bonusLayout2 = (LinearLayout) findViewById(R.id.bonus_secondary);
+
+        bonusLayout1.setVisibility(View.GONE);
+        bonusLayout2.setVisibility(View.VISIBLE);
+
+        Button bonusContinue = (Button) findViewById(R.id.bonus_after_button);
+        bonusContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bonusLayout2.setVisibility(View.GONE);
+            }
+        });
 
     }
 
