@@ -39,9 +39,13 @@ public class Game extends AppCompatActivity{
     Button runAway; //Button to choose to run away
     Button runAwayYes, runAwayNo; //Buttons for confirming or denying running away
 
-    TextView noSpell; //The textfield for if the player doesn't have a spell
+    TextView noSpell, minotaurSpell; //Textfields for spell casting errors
 
     LinearLayout runAwayLayout; //The layout containing the confirmation buttons for running away
+
+    TextView bonusBox, bonusBox2; //The textfields explaining the bonus box
+
+    Button bonusYes, bonusNo; //Buttons for accepting or denying the bonus box
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +108,7 @@ public class Game extends AppCompatActivity{
         runAwayNo = (Button) findViewById(R.id.run_away_no);
 
         noSpell = (TextView) findViewById(R.id.no_spells);
+        minotaurSpell = (TextView) findViewById(R.id.minotaur_spell);
 
         runAwayLayout = (LinearLayout) findViewById(R.id.run_away_layout);
 
@@ -113,6 +118,12 @@ public class Game extends AppCompatActivity{
                 attack(4);
             }
         });
+
+        bonusBox = (TextView) findViewById(R.id.box_text);
+        bonusBox2 = (TextView) findViewById(R.id.box_text2);
+
+        bonusYes = (Button) findViewById(R.id.prize_yes);
+        bonusNo = (Button) findViewById(R.id.prize_no);
 
         start(currentBadGuy-1); //Starts with the first bad guy
 
@@ -187,8 +198,21 @@ public class Game extends AppCompatActivity{
                 if(currentSpell==0){
                     //Don't have a spell
                     noSpell.setVisibility(View.VISIBLE);
+                }else if(currentSpell == 7 && currentBadGuy != 10){
+                    //The player has Minotaur's Pain but is not facing a Minotaur
+                    minotaurSpell.setVisibility(View.VISIBLE);
                 }else{
                     //Hit with Magic
+                    if(currentSpell == 1 || currentSpell == 2 || currentSpell == 3){
+                        //First tier spells
+                        damage = ((int)(Math.random()*30+1))*10;
+                    }else if(currentSpell == 4 || currentSpell == 5 || currentSpell == 6){
+                        //Second tier spells
+                        damage = ((int)(Math.random()*30+21))*10;
+                    }else{
+                        damage = ((int)(Math.random()*30+41)*10);
+                    }
+                    updateGame(damage);
                 }
                 break;
             case 4:
@@ -207,6 +231,7 @@ public class Game extends AppCompatActivity{
                         hideAppropriate();
                     }
                 });
+                break;
         }
     }
 
@@ -248,13 +273,68 @@ public class Game extends AppCompatActivity{
         slapBitch.setVisibility(View.GONE);
         slapPimp.setVisibility(View.GONE);
         noSpell.setVisibility(View.GONE);
+        minotaurSpell.setVisibility(View.GONE);
         runAwayLayout.setVisibility(View.GONE);
 
     }
 
     public void endBadGuy(){
 
+    }
 
+    public void bonusThing(int turn){
+        String output = "As you walk past " + enemy[currentBadGuy-1].name + ", You see a box, ";
+        String output2;
+        switch (turn){
+            case 1:
+                output += "it is a weapons box.";
+                output2 = "Would you like to open it and take the weapon inside? (Bear in mind this will replace your current weapon)";
+                bonusYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int turn;
+                        turn = (int)(Math.random()*7+1);
+                        if(turn == 3 || turn == 6){
+                            System.out.println("You have replaced your " + weapons[currentWeapon] + " with " + weapons[turn]);
+                        }else{
+                            System.out.println("You have replaced your " + weapons[currentWeapon] + " with a " + weapons[turn]);
+                        }
+                        currentWeapon = turn;
+                    }
+                });
+                break;
+            case 2:
+                output += "it is a spell box.";
+                output2 = "Would you like to open it and learn the spell inside? (Bear in mind this will replace your current spell)";
+                bonusYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                break;
+            case 3:
+                output += "it is a health potion box.";
+                output2 = "Would you like to drink it? (You can't take it with you to drink later)";
+                bonusYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                break;
+            default:
+                turn = (int)(Math.random()*3+1);
+                bonusThing(turn);
+                return;
+        }
+
+        bonusBox.setText(output);
+        bonusBox2.setText(output2);
+
+    }
+
+    public void setNoButton(int type, String text){
 
     }
 
