@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         TextView newText = (TextView) findViewById(R.id.intro_speech);
         String pt1 = getResources().getString(R.string.intro);
         String pt2 = getResources().getString(R.string.intro2);
-        String finalText = new String("Well then, " + name + ", " + pt1 + "\n" + pt2);
+        String finalText = new String("Well then, " + name + ", " + pt1 + "\n\n" + pt2);
         newText.setText(finalText);
 
         LinearLayout layout1 = (LinearLayout) findViewById(R.id.opening_layout);

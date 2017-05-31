@@ -155,126 +155,168 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="How do you want to attack?"
-        android:textSize="20sp"
-        android:paddingTop="50dp"
-        android:gravity="center"/>
-
-    <Button
-        android:id="@+id/attack_weapon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weapon" />
-
     <LinearLayout
+        android:id="@+id/attack_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/attack_hands"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hands" />
-
-        <Button
-            android:id="@+id/hands_punch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Punch"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/hands_slap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Slap"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/slap_pimp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pimp Slap"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/slap_bitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bitch Slap"
-            android:visibility="gone" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/attack_magic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Magic" />
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/no_spells"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="How do you want to attack?"
+            android:textSize="20sp"
+            android:paddingTop="50dp"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/attack_weapon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You don't know any spells."
-            android:visibility="invisible"/>
+            android:text="Weapon" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/attack_hands"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hands" />
+
+            <Button
+                android:id="@+id/hands_punch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Punch"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/hands_slap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slap"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/slap_pimp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pimp Slap"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/slap_bitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bitch Slap"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/attack_magic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Magic" />
+
+            <TextView
+                android:id="@+id/no_spells"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You don't know any spells."
+                android:visibility="invisible"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/run_away"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Run Away"/>
+
+            <LinearLayout
+                android:id="@+id/run_away_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Are you sure?"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/run_away_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yes"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"/>
+
+                    <Button
+                        android:id="@+id/run_away_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/prize_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/run_away"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Run Away"/>
-
-        <LinearLayout
-            android:id="@+id/run_away_layout"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:id="@+id/box_text"/>
 
-            <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/prize_yes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Are you sure?"
-                android:layout_gravity="center"/>
+                android:text="Yes"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Button
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/run_away_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Yes"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"/>
-
-                <Button
-                    android:id="@+id/run_away_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No"
-                    android:layout_gravity="left"
-                    android:layout_weight="1"/>
-
-            </LinearLayout>
+                android:id="@+id/prize_no"
+                android:text="No"/>
 
         </LinearLayout>
 

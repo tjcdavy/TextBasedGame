@@ -107,10 +107,20 @@ public class Game extends AppCompatActivity{
 
         runAwayLayout = (LinearLayout) findViewById(R.id.run_away_layout);
 
+        runAway.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attack(4);
+            }
+        });
+
+        start(currentBadGuy-1); //Starts with the first bad guy
+
     }
 
     public void attack(int attackType){
         int damage; //The damage the player will deal
+        hideAppropriate();
 
         switch(attackType){
             case 1:
@@ -175,10 +185,28 @@ public class Game extends AppCompatActivity{
             case 3:
                 //Magic
                 if(currentSpell==0){
-
+                    //Don't have a spell
+                    noSpell.setVisibility(View.VISIBLE);
                 }else{
-
+                    //Hit with Magic
                 }
+                break;
+            case 4:
+                //Run away button
+                runAwayLayout.setVisibility(View.VISIBLE);
+
+                runAwayYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        endGame();
+                    }
+                });
+                runAwayNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        hideAppropriate();
+                    }
+                });
         }
     }
 
@@ -188,10 +216,10 @@ public class Game extends AppCompatActivity{
      */
     public void start(int pos){
 
-        enemy[pos] = new BadGuy(pos);
+        enemy[pos] = new BadGuy(pos+1);
         enemyName.setText(enemy[pos].name);
         enemyType.setText(enemy[pos].type);
-        enemyHealth.setText(enemy[pos].health);
+        enemyHealth.setText("" + enemy[pos].health);
         String weapon;
         if(enemy[pos].type.equals("Ogre")){
             weapon = "Club";
@@ -209,9 +237,29 @@ public class Game extends AppCompatActivity{
      * Called after each turn to update the states and variables of everything
      */
     public void updateGame(int damage){
+        hideAppropriate();
 
     }
 
+    public void hideAppropriate(){
+        //Removing everything that shouldn't be there at the start of a turn.
+        handsPunch.setVisibility(View.GONE);
+        handsSlap.setVisibility(View.GONE);
+        slapBitch.setVisibility(View.GONE);
+        slapPimp.setVisibility(View.GONE);
+        noSpell.setVisibility(View.GONE);
+        runAwayLayout.setVisibility(View.GONE);
 
+    }
+
+    public void endBadGuy(){
+
+
+
+    }
+
+    public void endGame(){
+
+    }
 
 }
