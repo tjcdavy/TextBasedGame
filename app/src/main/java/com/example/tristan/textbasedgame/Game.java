@@ -2,6 +2,7 @@ package com.example.tristan.textbasedgame;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -132,7 +133,7 @@ public class Game extends AppCompatActivity{
 
     public void attack(int attackType){
         int damage; //The damage the player will deal
-        hideAppropriate();
+        //hideAppropriate();
 
         switch(attackType){
             case 1:
@@ -149,53 +150,59 @@ public class Game extends AppCompatActivity{
             case 2:
                 //Hands
 
-                //For a punch
-                handsPunch.setVisibility(View.VISIBLE);
-                handsPunch.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int damage = ((int)(Math.random()*40+1)*10);
-                        updateGame(damage);
-                    }
-                });
+                if(handsSlap.getVisibility() == View.GONE) {
+                    hideAppropriate();
+                    //For a punch
+                    handsPunch.setVisibility(View.VISIBLE);
+                    handsPunch.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int damage = ((int) (Math.random() * 40 + 1) * 10);
+                            updateGame(damage);
+                        }
+                    });
 
-                //For a slap
-                handsSlap.setVisibility(View.VISIBLE);
-                handsSlap.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        handsPunch.setVisibility(View.GONE);
+                    //For a slap
+                    handsSlap.setVisibility(View.VISIBLE);
+                    handsSlap.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            handsPunch.setVisibility(View.GONE);
 
-                        //Bitch slap
-                        slapBitch.setVisibility(View.VISIBLE);
-                        slapBitch.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                int damage = ((int)(Math.random()*30+1))*10;
-                                if(enemy[currentBadGuy -1].type.equals("Troll")){
-                                    damage = damage * 2;
+                            //Bitch slap
+                            slapBitch.setVisibility(View.VISIBLE);
+                            slapBitch.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    int damage = ((int) (Math.random() * 30 + 1)) * 10;
+                                    if (enemy[currentBadGuy - 1].type.equals("Troll")) {
+                                        damage = damage * 2;
+                                    }
+                                    updateGame(damage);
                                 }
-                                updateGame(damage);
-                            }
-                        });
+                            });
 
-                        //Pimp slap
-                        slapPimp.setVisibility(View.VISIBLE);
-                        slapPimp.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                int damage = ((int)(Math.random()*50+1))*10;
-                                if(enemy[currentBadGuy -1].type.equals("Minotaur")){
-                                    damage = damage * 2;
+                            //Pimp slap
+                            slapPimp.setVisibility(View.VISIBLE);
+                            slapPimp.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    int damage = ((int) (Math.random() * 50 + 1)) * 10;
+                                    if (enemy[currentBadGuy - 1].type.equals("Minotaur")) {
+                                        damage = damage * 2;
+                                    }
+                                    updateGame(damage);
                                 }
-                                updateGame(damage);
-                            }
-                        });
-                    }
-                });
+                            });
+                        }
+                    });
+                }else{
+                    hideAppropriate();
+                }
                 break;
             case 3:
                 //Magic
+                hideAppropriate();
                 if(currentSpell==0){
                     //Don't have a spell
                     noSpell.setVisibility(View.VISIBLE);
@@ -218,20 +225,26 @@ public class Game extends AppCompatActivity{
                 break;
             case 4:
                 //Run away button
-                runAwayLayout.setVisibility(View.VISIBLE);
+                //Log.d("Visibility", runAwayLayout.getVisibility() + " - " + View.GONE + " - " + View.VISIBLE);
+                if(runAwayLayout.getVisibility() == View.GONE) {
+                    hideAppropriate();
+                    runAwayLayout.setVisibility(View.VISIBLE);
 
-                runAwayYes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        endGame();
-                    }
-                });
-                runAwayNo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        hideAppropriate();
-                    }
-                });
+                    runAwayYes.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            endGame();
+                        }
+                    });
+                    runAwayNo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            hideAppropriate();
+                        }
+                    });
+                }else if(runAwayLayout.getVisibility() == View.VISIBLE){
+                    hideAppropriate();
+                }
                 break;
         }
     }
@@ -266,6 +279,7 @@ public class Game extends AppCompatActivity{
         hideAppropriate();
         String attackSpiel = "Your attack dealt " + damage + " damage.";
         enemy[currentBadGuy-1].health -= damage;
+        enemyHealth.setText("" + enemy[currentBadGuy-1].health);
         String enemySpiel;
 
         if(enemy[currentBadGuy-1].health > 0){
@@ -273,7 +287,7 @@ public class Game extends AppCompatActivity{
             health -= enemyDamage;
             enemySpiel = "The enemy dealt " + enemyDamage + " damage";
             if(health > 0){
-                playerHealth.setText(health);
+                playerHealth.setText("" + health);
                 enemySpiel += ".";
             }else{
                 gameGoing = Finished.LOSS;
@@ -282,7 +296,7 @@ public class Game extends AppCompatActivity{
         }else{
             enemySpiel = "You defeated them, congratulations.";
         }
-        
+
     }
 
     public void hideAppropriate(){
