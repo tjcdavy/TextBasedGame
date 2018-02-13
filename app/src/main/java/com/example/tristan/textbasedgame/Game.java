@@ -1,5 +1,6 @@
 package com.example.tristan.textbasedgame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -365,7 +366,9 @@ public class Game extends AppCompatActivity{
             endGameButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent i = new Intent(Game.this, PositiveEnd.class);
+                    i.putExtra("badGuys", enemy);
+                    startActivity(i);
                 }
             });
         }

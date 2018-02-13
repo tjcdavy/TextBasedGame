@@ -416,13 +416,13 @@
         android:visibility="gone"
         android:gravity="center">
 
-        <TextView
-            android:id="@+id/end_game_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="You have defeated Steve the Minotaur\nCongratulations"
-            android:gravity="center"
-            android:textSize="15sp"/>
+        <!--<TextView-->
+            <!--android:id="@+id/end_game_text"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="You have defeated Steve the Minotaur\nCongratulations"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="15sp"/>-->
 
         <Button
             android:id="@+id/end_game_button"
