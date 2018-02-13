@@ -42,6 +42,10 @@ public class Game extends AppCompatActivity{
     TextView noSpell, minotaurSpell; //Textfields for spell casting errors
 
     LinearLayout runAwayLayout; //The layout containing the confirmation buttons for running away
+    LinearLayout attackOptions; //The layout containing all of the options for attacking
+    LinearLayout attackInfo; //The layout for the spiel after an attack
+
+    LinearLayout bonusLayout1, bonusLayout2; //The layouts for the bonus boxes after defeating a bad guy
 
     TextView bonusBox, bonusBox2, bonusMore; //The textfields explaining the bonus box
 
@@ -110,7 +114,12 @@ public class Game extends AppCompatActivity{
         noSpell = (TextView) findViewById(R.id.no_spells);
         minotaurSpell = (TextView) findViewById(R.id.minotaur_spell);
 
+        attackOptions = (LinearLayout) findViewById(R.id.attack_options);
         runAwayLayout = (LinearLayout) findViewById(R.id.run_away_layout);
+        attackInfo = (LinearLayout) findViewById(R.id.attack_info);
+
+        bonusLayout1 = (LinearLayout) findViewById(R.id.prize_layout);
+        bonusLayout2 = (LinearLayout) findViewById(R.id.bonus_secondary);
 
         runAway.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +140,10 @@ public class Game extends AppCompatActivity{
 
     }
 
+    /**
+     * When an attack is used by the player, figures out what damage should be dealt
+     * @param attackType The attack used by the player
+     */
     public void attack(int attackType){
         int damage; //The damage the player will deal
         //hideAppropriate();
@@ -254,6 +267,16 @@ public class Game extends AppCompatActivity{
      * @param pos the number the bad guy is
      */
     public void start(int pos){
+        attackOptions.setVisibility(View.VISIBLE);
+
+        attackInfo.setVisibility(View.GONE);
+
+        playerWeapon.setText(weapons[currentWeapon]);
+        playerMagic.setText(spells[currentSpell]);
+        playerHealth.setText("" + health);
+
+        bonusLayout1.setVisibility(View.GONE);
+        bonusLayout2.setVisibility(View.GONE);
 
         enemy[pos] = new BadGuy(pos+1);
         enemyName.setText(enemy[pos].name);
@@ -274,12 +297,19 @@ public class Game extends AppCompatActivity{
 
     /**
      * Called after each turn to update the states and variables of everything
+     * @param damage The damage the player dealt
      */
     public void updateGame(int damage){
         hideAppropriate();
         String attackSpiel = "Your attack dealt " + damage + " damage.";
         enemy[currentBadGuy-1].health -= damage;
-        enemyHealth.setText("" + enemy[currentBadGuy-1].health);
+        String repText;
+        if(enemy[currentBadGuy-1].health <= 0){
+            repText = "0";
+        }else {
+            repText = "" + enemy[currentBadGuy - 1].health;
+        }
+        enemyHealth.setText(repText);
         String enemySpiel;
 
         if(enemy[currentBadGuy-1].health > 0){
@@ -287,20 +317,29 @@ public class Game extends AppCompatActivity{
             health -= enemyDamage;
             enemySpiel = "The enemy dealt " + enemyDamage + " damage";
             if(health > 0){
-                playerHealth.setText("" + health);
+                String healthText = "" + health;
+                playerHealth.setText(healthText);
                 enemySpiel += ".";
             }else{
                 gameGoing = Finished.LOSS;
                 enemySpiel += " and killed you.";
             }
         }else{
-            enemySpiel = "You defeated them, congratulations.";
+            enemySpiel = ".\nYou defeated them, congratulations.";
+            endBadGuy();
         }
+        attackInfo.setVisibility(View.VISIBLE);
+        TextView spiels = (TextView) findViewById(R.id.attack_text_player);
+        spiels.setText(attackSpiel);
+        spiels = (TextView) findViewById(R.id.attack_text_enemy);
+        spiels.setText(enemySpiel);
 
     }
 
+    /**
+     * Removing everything that shouldn't be there at the start of a turn
+     */
     public void hideAppropriate(){
-        //Removing everything that shouldn't be there at the start of a turn.
         handsPunch.setVisibility(View.GONE);
         handsSlap.setVisibility(View.GONE);
         slapBitch.setVisibility(View.GONE);
@@ -311,8 +350,25 @@ public class Game extends AppCompatActivity{
 
     }
 
+    /**
+     * What happens when the bad guy is defeated
+     */
     public void endBadGuy(){
+        attackOptions.setVisibility(View.GONE);
+        if(currentBadGuy < 10) {
+            bonusLayout1.setVisibility(View.VISIBLE);
+            bonusThing(currentBadGuy);
+        }else{
+            LinearLayout endGameLayout = (LinearLayout)findViewById(R.id.end_game_layout);
+            endGameLayout.setVisibility(View.VISIBLE);
+            Button endGameButton = (Button)findViewById(R.id.end_game_button);
+            endGameButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                }
+            });
+        }
     }
 
     public void bonusThing(int turn){
@@ -403,9 +459,6 @@ public class Game extends AppCompatActivity{
     }
 
     public void switchBonus(){
-        LinearLayout bonusLayout1 = (LinearLayout) findViewById(R.id.prize_layout);
-        final LinearLayout bonusLayout2 = (LinearLayout) findViewById(R.id.bonus_secondary);
-
         bonusLayout1.setVisibility(View.GONE);
         bonusLayout2.setVisibility(View.VISIBLE);
 
@@ -414,6 +467,8 @@ public class Game extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 bonusLayout2.setVisibility(View.GONE);
+                currentBadGuy++;
+                start(currentBadGuy-1);
             }
         });
 
