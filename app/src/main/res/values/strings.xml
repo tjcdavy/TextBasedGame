@@ -3,4 +3,7 @@
     <string name="player_name">Name</string>
     <string name="intro">You are hereby invited to explore my little dungeon ;)</string>
     <string name="intro2">But seriously, I have an infestation in my dungeon and I need your help.  I need you to go down there and kill all the little thingys that have taken up residence.  You see, they are all between my and my 1000 year old bottle of Scotch, and I need it for a party I am throwing.  Here is this butter knife from my kitchen, you can take it with you, hopefully you will find something better down there.</string>
+    <string name="cont">Continue</string>
+    <string name="y_butt">Yes</string>
+    <string name="n_butt">No</string>
 </resources>

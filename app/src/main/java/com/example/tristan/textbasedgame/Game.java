@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class Game extends AppCompatActivity{
 
-    enum Finished {GOING, WIN, LOSS};
+    enum Finished {GOING, WIN, LOSS, RUN};
 
     int health; //The health of the player
     String name; //The player's name
@@ -45,6 +45,8 @@ public class Game extends AppCompatActivity{
     LinearLayout runAwayLayout; //The layout containing the confirmation buttons for running away
     LinearLayout attackOptions; //The layout containing all of the options for attacking
     LinearLayout attackInfo; //The layout for the spiel after an attack
+
+    LinearLayout endGameLayout; //The layout for the button that appears when the game is won or lost
 
     LinearLayout bonusLayout1, bonusLayout2; //The layouts for the bonus boxes after defeating a bad guy
 
@@ -122,6 +124,8 @@ public class Game extends AppCompatActivity{
         bonusLayout1 = (LinearLayout) findViewById(R.id.prize_layout);
         bonusLayout2 = (LinearLayout) findViewById(R.id.bonus_secondary);
 
+        endGameLayout = (LinearLayout)findViewById(R.id.end_game_layout);
+
         runAway.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +142,15 @@ public class Game extends AppCompatActivity{
         bonusContinue = (Button) findViewById(R.id.bonus_after_button);
 
         start(currentBadGuy-1); //Starts with the first bad guy
+
+        Button endGameButton = (Button)findViewById(R.id.end_game_button);
+        endGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endGame();
+
+            }
+        });
 
     }
 
@@ -247,6 +260,7 @@ public class Game extends AppCompatActivity{
                     runAwayYes.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            gameGoing = Finished.RUN;
                             endGame();
                         }
                     });
@@ -307,29 +321,35 @@ public class Game extends AppCompatActivity{
         String repText;
         if(enemy[currentBadGuy-1].health <= 0){
             repText = "0";
+            if(currentBadGuy==10){
+                gameGoing = Finished.WIN;
+            }
         }else {
             repText = "" + enemy[currentBadGuy - 1].health;
         }
         enemyHealth.setText(repText);
         String enemySpiel;
 
+
         if(enemy[currentBadGuy-1].health > 0){
             int enemyDamage = ((int)(Math.random()*10+1))*enemy[currentBadGuy -1].damageMult;
             health -= enemyDamage;
             enemySpiel = "The enemy dealt " + enemyDamage + " damage";
             if(health > 0){
+                attackInfo.setVisibility(View.VISIBLE);
                 String healthText = "" + health;
                 playerHealth.setText(healthText);
                 enemySpiel += ".";
             }else{
+                attackOptions.setVisibility(View.GONE);
                 gameGoing = Finished.LOSS;
                 enemySpiel += " and killed you.";
+                playerHealth.setText("0");
             }
         }else{
             enemySpiel = ".\nYou defeated them, congratulations.";
             endBadGuy();
         }
-        attackInfo.setVisibility(View.VISIBLE);
         TextView spiels = (TextView) findViewById(R.id.attack_text_player);
         spiels.setText(attackSpiel);
         spiels = (TextView) findViewById(R.id.attack_text_enemy);
@@ -360,17 +380,9 @@ public class Game extends AppCompatActivity{
             bonusLayout1.setVisibility(View.VISIBLE);
             bonusThing(currentBadGuy);
         }else{
-            LinearLayout endGameLayout = (LinearLayout)findViewById(R.id.end_game_layout);
+            //LinearLayout endGameLayout = (LinearLayout)findViewById(R.id.end_game_layout);
             endGameLayout.setVisibility(View.VISIBLE);
-            Button endGameButton = (Button)findViewById(R.id.end_game_button);
-            endGameButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Game.this, PositiveEnd.class);
-                    i.putExtra("badGuys", enemy);
-                    startActivity(i);
-                }
-            });
+
         }
     }
 
@@ -451,6 +463,10 @@ public class Game extends AppCompatActivity{
 
     }
 
+    /**
+     * Seeing as all no buttons have similar functionality, sets them all here
+     * @param text The text to be shown on the bonus screen
+     */
     public void setNoButton(final String text){
         bonusNo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -461,6 +477,9 @@ public class Game extends AppCompatActivity{
         });
     }
 
+    /**
+     * Switches bonus view from looking at the box to confirming
+     */
     public void switchBonus(){
         bonusLayout1.setVisibility(View.GONE);
         bonusLayout2.setVisibility(View.VISIBLE);
@@ -477,8 +496,38 @@ public class Game extends AppCompatActivity{
 
     }
 
+    /**
+     * If the game is ended
+     */
     public void endGame(){
+        if(gameGoing == Finished.WIN){
+            Intent i = new Intent(Game.this, PositiveEnd.class);
+            i.putExtra("badGuys", names());
+            startActivity(i);
+            finish();
+        } else if (gameGoing == Finished.LOSS){
+            Intent i = new Intent(Game.this, NegativeEnd.class);
+            i.putExtra("badGuys", names());
+            i.putExtra("run", false);
+            startActivity(i);
+            finish();
+        } else if (gameGoing == Finished.RUN){
+            Intent i = new Intent(Game.this, NegativeEnd.class);
+            i.putExtra("badGuys", names());
+            i.putExtra("run", true);
+            startActivity(i);
+            finish();
+        }
+    }
 
+    public String[] names(){
+        String names[] = new String[currentBadGuy];
+
+        for(int i = 0; i < currentBadGuy; i++){
+            names[i] = enemy[i].name;
+        }
+
+        return names;
     }
 
 }
