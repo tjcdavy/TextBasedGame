@@ -13,6 +13,9 @@ public class MainActivity extends AppCompatActivity {
 
     public String name;
     public Boolean instant;
+    LinearLayout layout1;
+    LinearLayout layout2;
+    EditText nameField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +25,23 @@ public class MainActivity extends AppCompatActivity {
         Button nameButton = (Button) findViewById(R.id.namebutton);
         Button goButton = (Button) findViewById(R.id.gobutton);
 
+        layout1 = (LinearLayout) findViewById(R.id.opening_layout);
+        layout2 = (LinearLayout) findViewById(R.id.introduction);
+        nameField = (EditText) findViewById(R.id.name);
+
         instant = null;
 
         nameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText nameField = (EditText) findViewById(R.id.name);
-                name = nameField.getText().toString();
-                switchLayout();
-
+                TextView badName = (TextView)findViewById(R.id.name_fail);
+                if(nameField.getText().toString().equals("")){
+                    badName.setVisibility(View.VISIBLE);
+                } else {
+                    name = nameField.getText().toString();
+                    switchLayout();
+                    badName.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -40,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, Game.class);
                 intent.putExtra("name", name);
                 startActivity(intent);
+
+                layout1.setVisibility(View.VISIBLE);
+                layout2.setVisibility(View.GONE);
+                nameField.setText("");
             }
         });
     }
@@ -54,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
         String pt2 = getResources().getString(R.string.intro2);
         String finalText = new String("Well then, " + name + ", " + pt1 + "\n\n" + pt2);
         newText.setText(finalText);
-
-        LinearLayout layout1 = (LinearLayout) findViewById(R.id.opening_layout);
-        LinearLayout layout2 = (LinearLayout) findViewById(R.id.introduction);
 
         layout1.setVisibility(View.GONE);
         layout2.setVisibility(View.VISIBLE);
@@ -77,6 +89,16 @@ public class MainActivity extends AppCompatActivity {
         }else if(toCheck.equals("ben") || toCheck.equals("teegan") || toCheck.equals("merlin")){
             //makes the player instantly lose
             instant = false;
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(layout2.getVisibility() == View.VISIBLE){
+            layout1.setVisibility(View.VISIBLE);
+            layout2.setVisibility(View.GONE);
+        } else {
+            finish();
         }
     }
 

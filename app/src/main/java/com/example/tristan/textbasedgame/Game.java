@@ -329,6 +329,7 @@ public class Game extends AppCompatActivity{
         }
         enemyHealth.setText(repText);
         String enemySpiel;
+        attackInfo.setVisibility(View.VISIBLE);
 
 
         if(enemy[currentBadGuy-1].health > 0){
@@ -336,7 +337,6 @@ public class Game extends AppCompatActivity{
             health -= enemyDamage;
             enemySpiel = "The enemy dealt " + enemyDamage + " damage";
             if(health > 0){
-                attackInfo.setVisibility(View.VISIBLE);
                 String healthText = "" + health;
                 playerHealth.setText(healthText);
                 enemySpiel += ".";
@@ -345,6 +345,7 @@ public class Game extends AppCompatActivity{
                 gameGoing = Finished.LOSS;
                 enemySpiel += " and killed you.";
                 playerHealth.setText("0");
+                endGameLayout.setVisibility(View.VISIBLE);
             }
         }else{
             enemySpiel = ".\nYou defeated them, congratulations.";
@@ -386,6 +387,10 @@ public class Game extends AppCompatActivity{
         }
     }
 
+    /**
+     * After an enemy is defeated, this generated the loot box
+     * @param turn The turn in the game, as in the beginning, one of each box will show up
+     */
     public void bonusThing(int turn){
         String output = "As you walk past " + enemy[currentBadGuy-1].name + ", You see a box, ";
         String output2;
@@ -497,7 +502,7 @@ public class Game extends AppCompatActivity{
     }
 
     /**
-     * If the game is ended
+     * If the game is ended, this sends it to the appropriate pages
      */
     public void endGame(){
         if(gameGoing == Finished.WIN){
@@ -520,13 +525,15 @@ public class Game extends AppCompatActivity{
         }
     }
 
+    /**
+     * Converts the names of the bad guys to a string array to send to the completion page
+     * @return Array of enemy names
+     */
     public String[] names(){
         String names[] = new String[currentBadGuy];
-
         for(int i = 0; i < currentBadGuy; i++){
             names[i] = enemy[i].name;
         }
-
         return names;
     }
 

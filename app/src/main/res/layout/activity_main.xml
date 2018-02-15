@@ -32,7 +32,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Continue"/>
+            android:text="@string/cont"/>
+
+        <TextView
+            android:id="@+id/name_fail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You need to enter a name"
+            android:paddingTop="10dp"
+            android:textColor="@color/red"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
