@@ -34,7 +34,7 @@ public class NegativeEnd extends AppCompatActivity {
             if(ran){
                 names += "but ran away from " + enemies[enemies.length-1] + ".";
             }else{
-                names += "but were defeated by" + enemies[enemies.length-1] + ".";
+                names += "but were defeated by " + enemies[enemies.length-1] + ".";
             }
             if(enemies.length == 10){
                 names += "\nI guess I've got to respect the fact that you made it all the way to Steve the Minotaur.";

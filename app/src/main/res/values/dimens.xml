@@ -5,4 +5,5 @@
     <dimen name="game_text_size">15sp</dimen>
     <dimen name="battle_headings">30sp</dimen>
     <dimen name="battle_info">20sp</dimen>
+    <dimen name="info_text">20sp</dimen>
 </resources>

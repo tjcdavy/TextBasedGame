@@ -21,7 +21,7 @@ public class Game extends AppCompatActivity{
     String name; //The player's name
     Finished gameGoing; //The current state of the game
     final String[] weapons = {null, "Butter Knife", "Dagger", "Dual Daggers", "Sword", "Broadsword", "Dual Swords", "Katana"}; //Weapon names
-    final String[] spells = {"Nothing", "Fireball", "Icebrick", "Windgust", "Blue Flame", "Arctic Cold", "Tornado wind", "Minotaur's Pain"}; //Spell Names
+    final String[] spells = {"Nothing", "Fireball", "Icebrick", "Windgust", "Blue Flame", "Arctic Cold", "Tornado Wind", "Minotaur's Pain"}; //Spell Names
     int currentWeapon; //The index of the array for the current weapon
     int currentSpell; //The index of the array for the current spell
     BadGuy[] enemy; //Array for the different enemies
@@ -398,46 +398,51 @@ public class Game extends AppCompatActivity{
             case 1:
                 //Generates a weapons box
                 output += "it is a weapons box.";
-                output2 = "Would you like to open it and take the weapon inside? (Bear in mind this will replace your current weapon)";
+                output2 = "Would you like to open it and take the weapon inside? (Bear in mind this will replace your current weapon)\n\n";
+                final int turn1 = (int)(Math.random()*7+1);
+                if(turn1 == 3 || turn1 == 6){
+                    output2 += "The new weapons are " + weapons[turn1] + ".";
+                }else{
+                    output2 += "The new weapon is " + weapons[turn1] + ".";
+                }
                 bonusYes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int turn;
-                        turn = (int)(Math.random()*7+1);
                         String text;
-                        if(turn == 3 || turn == 6){
-                            text = "You have replaced your " + weapons[currentWeapon] + " with " + weapons[turn];
+                        if(turn1 == 3 || turn1 == 6){
+                            text = "You have replaced your " + weapons[currentWeapon] + " with " + weapons[turn1];
                         }else{
-                            text = "You have replaced your " + weapons[currentWeapon] + " with a " + weapons[turn];
+                            text = "You have replaced your " + weapons[currentWeapon] + " with a " + weapons[turn1];
                         }
                         bonusMore.setText(text);
-                        currentWeapon = turn;
+                        currentWeapon = turn1;
                         switchBonus();
                     }
                 });
-                String nope = "So you decide to stick with your trusty " + weapons[currentWeapon] + ".  Fair Enough, I guess we'll never know if it was better";
+                String nope = "So you decide to stick with your trusty " + weapons[currentWeapon] + ".  Fair Enough.";
                 setNoButton(nope);
                 break;
             case 2:
                 //Generates a spell box
                 output += "it is a spell box.";
                 output2 = "Would you like to open it and learn the spell inside? (Bear in mind this will replace your current spell)";
+                final int turn2 = (int)(Math.random()*7+1);
+                output2 += "\n\nThe new spell is " + spells[turn2] + ".";
                 bonusYes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int turn = (int)(Math.random()*7+1);
                         String text;
                         if(currentSpell == 0){
-                            text = "You have learnt the " + spells[turn] + " spell.";
+                            text = "You have learnt the " + spells[turn2] + " spell.";
                         }else{
-                            text = "You have replaced your " + spells[currentSpell] + " spell with " + spells[turn];
+                            text = "You have replaced your " + spells[currentSpell] + " spell with " + spells[turn2];
                         }
                         bonusMore.setText(text);
-                        currentSpell = turn;
+                        currentSpell = turn2;
                         switchBonus();
                     }
                 });
-                String nopey = "So you decide to stick with your trusty " + spells[currentSpell] + ".  Fair Enough, I guess we'll never know if it was better";
+                String nopey = "So you decide to stick with the " + spells[currentSpell] + " spell.  Fair Enough.";
                 setNoButton(nopey);
                 break;
             case 3:
