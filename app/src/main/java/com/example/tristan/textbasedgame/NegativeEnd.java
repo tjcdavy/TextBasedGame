@@ -27,10 +27,22 @@ public class NegativeEnd extends AppCompatActivity {
         if(enemies.length == 1){
             names = "You ran away from " + enemies[0] + ".\n\nSeriously?  You couldn't even defeat a Goblin?\nYou disappoint me.";
         }else{
-
+            names = "You defeated ";
+            for(int i = 0; i < enemies.length-1; i++){
+                names += enemies[i] + ", ";
+            }
+            if(ran){
+                names += "but ran away from " + enemies[enemies.length-1] + ".";
+            }else{
+                names += "but were defeated by" + enemies[enemies.length-1] + ".";
+            }
+            if(enemies.length == 10){
+                names += "\nI guess I've got to respect the fact that you made it all the way to Steve the Minotaur.";
+            }
+            names += "\n\nOh well, guess it wasn't meant to be.\nI'm not angry, I'm just disappointed.";
         }
 
-
+        textView.setText(names);
 
         Button button = (Button)findViewById(R.id.negative_button);
         button.setOnClickListener(new View.OnClickListener() {
