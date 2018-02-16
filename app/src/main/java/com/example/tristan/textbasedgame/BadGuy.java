@@ -37,7 +37,7 @@ public class BadGuy {
      * A switch to decide which beast constructor is called
      * @param j The number for the switch
      */
-    public void leSwitch(int j){
+    private void leSwitch(int j){
         switch(j){
             case 1:
                 goblin();
@@ -57,7 +57,7 @@ public class BadGuy {
     /**
      * Creates the bad guy as a goblin
      */
-    public void goblin(){
+    private void goblin(){
         type = "Goblin";
         health = 100;
         damageMult = 10;
@@ -66,7 +66,7 @@ public class BadGuy {
     /**
      * Creates the bad guy as an orc
      */
-    public void orc(){
+    private void orc(){
         type = "Orc";
         health = 200;
         damageMult = 20;
@@ -75,7 +75,7 @@ public class BadGuy {
     /**
      * Creates the bad guy as a troll
      */
-    public void troll(){
+    private void troll(){
         type = "Troll";
         health = 300;
         damageMult = 40;
@@ -84,7 +84,7 @@ public class BadGuy {
     /**
      * Creates the bad guy as an orc
      */
-    public void ogre(){
+    private void ogre(){
         type = "Ogre";
         health = 500;
         damageMult = 50;
@@ -93,7 +93,7 @@ public class BadGuy {
     /**
      * Creates the final boss, the minotaur
      */
-    public void minotaur(){
+    private void minotaur(){
         name = "Steve";
         type = "Minotaur";
         health = 2000;

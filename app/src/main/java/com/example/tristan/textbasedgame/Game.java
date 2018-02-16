@@ -52,7 +52,7 @@ public class Game extends AppCompatActivity{
 
     TextView bonusBox, bonusBox2, bonusMore; //The textfields explaining the bonus box
 
-    Button bonusYes, bonusNo, bonusContinue; //Buttons for accepting or denying the bonus box
+    Button bonusYes, bonusNo, bonusContinue; //Buttons for accepting or denying the bonus box, and continuing the game afterwards
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +148,6 @@ public class Game extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 endGame();
-
             }
         });
 
@@ -166,10 +165,13 @@ public class Game extends AppCompatActivity{
             case 1:
                 //Sword
                 if(currentWeapon <= 3){
+                    //Low level weapons cause the least damage
                     damage = ((int)(Math.random()*5+1))*(currentWeapon*10);
                 }else if(currentWeapon > 3 && currentWeapon >= 6){
+                    //Mid range weapons cause medium damage
                     damage = ((int)(Math.random()*10+1))*(currentWeapon*10);
                 }else{
+                    //Katana causes High Damage
                     damage = ((int)(Math.random()*10+6))*(currentWeapon*10);
                 }
                 updateGame(damage);
@@ -201,8 +203,10 @@ public class Game extends AppCompatActivity{
                             slapBitch.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    //Bitch slap causes low damage
                                     int damage = ((int) (Math.random() * 30 + 1)) * 10;
                                     if (enemy[currentBadGuy - 1].type.equals("Troll")) {
+                                        //Double damage for trolls
                                         damage = damage * 2;
                                     }
                                     updateGame(damage);
@@ -214,8 +218,10 @@ public class Game extends AppCompatActivity{
                             slapPimp.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    //Pimp slap causes high damage
                                     int damage = ((int) (Math.random() * 50 + 1)) * 10;
                                     if (enemy[currentBadGuy - 1].type.equals("Minotaur")) {
+                                        //Double damage for Minotaur
                                         damage = damage * 2;
                                     }
                                     updateGame(damage);
@@ -239,12 +245,13 @@ public class Game extends AppCompatActivity{
                 }else{
                     //Hit with Magic
                     if(currentSpell == 1 || currentSpell == 2 || currentSpell == 3){
-                        //First tier spells
+                        //First tier spells cause low damage
                         damage = ((int)(Math.random()*30+1))*10;
                     }else if(currentSpell == 4 || currentSpell == 5 || currentSpell == 6){
-                        //Second tier spells
+                        //Second tier spells cause mid range damage
                         damage = ((int)(Math.random()*30+21))*10;
                     }else{
+                        //Minotaur's Pain causes high damage to minotaur
                         damage = ((int)(Math.random()*30+41)*10);
                     }
                     updateGame(damage);
@@ -252,7 +259,6 @@ public class Game extends AppCompatActivity{
                 break;
             case 4:
                 //Run away button
-                //Log.d("Visibility", runAwayLayout.getVisibility() + " - " + View.GONE + " - " + View.VISIBLE);
                 if(runAwayLayout.getVisibility() == View.GONE) {
                     hideAppropriate();
                     runAwayLayout.setVisibility(View.VISIBLE);
@@ -260,6 +266,7 @@ public class Game extends AppCompatActivity{
                     runAwayYes.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            //Player chooses to run away
                             gameGoing = Finished.RUN;
                             endGame();
                         }
@@ -267,10 +274,12 @@ public class Game extends AppCompatActivity{
                     runAwayNo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            //User decided not to run away
                             hideAppropriate();
                         }
                     });
                 }else if(runAwayLayout.getVisibility() == View.VISIBLE){
+                    //If it's visible, then hide it
                     hideAppropriate();
                 }
                 break;
@@ -283,9 +292,9 @@ public class Game extends AppCompatActivity{
      */
     public void start(int pos){
         attackOptions.setVisibility(View.VISIBLE);
-
         attackInfo.setVisibility(View.GONE);
 
+        //Making sure the player values are correct after loot box
         playerWeapon.setText(weapons[currentWeapon]);
         playerMagic.setText(spells[currentSpell]);
         playerHealth.setText("" + health);
@@ -293,18 +302,22 @@ public class Game extends AppCompatActivity{
         bonusLayout1.setVisibility(View.GONE);
         bonusLayout2.setVisibility(View.GONE);
 
+        //Putting up the information on the new monster
         enemy[pos] = new BadGuy(pos+1);
         enemyName.setText(enemy[pos].name);
         enemyType.setText(enemy[pos].type);
         enemyHealth.setText("" + enemy[pos].health);
         String weapon;
         if(enemy[pos].type.equals("Ogre")){
+            //An Ogre wields a club, as the Ogre is strongest enemy before the Minotaur
             weapon = "Club";
         }
         else if(enemy[pos].type.equals("Minotaur")){
+            //To make it more threatening, Minotaur has a broadsword
             weapon = "Broadsword";
         }
         else{
+            //Everything else doesn't have a weapon
             weapon = "Hands";
         }
         enemyWeapon.setText(weapon);
@@ -318,29 +331,35 @@ public class Game extends AppCompatActivity{
         hideAppropriate();
         String attackSpiel = "Your attack dealt " + damage + " damage.";
         enemy[currentBadGuy-1].health -= damage;
-        String repText;
+        String repText;  //Text to replace the enemy health marker
         if(enemy[currentBadGuy-1].health <= 0){
+            //Enemy is defeated
             repText = "0";
             if(currentBadGuy==10){
+                //If the enemy is the minotaur, then the game is won
                 gameGoing = Finished.WIN;
             }
         }else {
+            //Enemy is not dead yet
             repText = "" + enemy[currentBadGuy - 1].health;
         }
         enemyHealth.setText(repText);
-        String enemySpiel;
+        String enemySpiel; //Info about the enemy attack
         attackInfo.setVisibility(View.VISIBLE);
 
 
         if(enemy[currentBadGuy-1].health > 0){
+            //If the enemy is not dead
             int enemyDamage = ((int)(Math.random()*10+1))*enemy[currentBadGuy -1].damageMult;
             health -= enemyDamage;
             enemySpiel = "The enemy dealt " + enemyDamage + " damage";
             if(health > 0){
+                //Player is not dead
                 String healthText = "" + health;
                 playerHealth.setText(healthText);
                 enemySpiel += ".";
             }else{
+                //Player is dead
                 attackOptions.setVisibility(View.GONE);
                 gameGoing = Finished.LOSS;
                 enemySpiel += " and killed you.";
@@ -348,7 +367,8 @@ public class Game extends AppCompatActivity{
                 endGameLayout.setVisibility(View.VISIBLE);
             }
         }else{
-            enemySpiel = ".\nYou defeated them, congratulations.";
+            //If the enemy is dead
+            enemySpiel = "You defeated them, congratulations.";
             endBadGuy();
         }
         TextView spiels = (TextView) findViewById(R.id.attack_text_player);
@@ -378,6 +398,7 @@ public class Game extends AppCompatActivity{
     public void endBadGuy(){
         attackOptions.setVisibility(View.GONE);
         if(currentBadGuy < 10) {
+            //Makes the loot box view visible
             bonusLayout1.setVisibility(View.VISIBLE);
             bonusThing(currentBadGuy);
         }else{
@@ -401,17 +422,22 @@ public class Game extends AppCompatActivity{
                 output2 = "Would you like to open it and take the weapon inside? (Bear in mind this will replace your current weapon)\n\n";
                 final int turn1 = (int)(Math.random()*7+1);
                 if(turn1 == 3 || turn1 == 6){
+                    //Dual Daggers and Dual Swords, correct grammar
                     output2 += "The new weapons are " + weapons[turn1] + ".";
                 }else{
+                    //Everything else
                     output2 += "The new weapon is " + weapons[turn1] + ".";
                 }
                 bonusYes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //Player accepts
                         String text;
                         if(turn1 == 3 || turn1 == 6){
+                            //Dual Daggers and Dual Swords, correct grammar
                             text = "You have replaced your " + weapons[currentWeapon] + " with " + weapons[turn1];
                         }else{
+                            //Everything else
                             text = "You have replaced your " + weapons[currentWeapon] + " with a " + weapons[turn1];
                         }
                         bonusMore.setText(text);
@@ -427,14 +453,17 @@ public class Game extends AppCompatActivity{
                 output += "it is a spell box.";
                 output2 = "Would you like to open it and learn the spell inside? (Bear in mind this will replace your current spell)";
                 final int turn2 = (int)(Math.random()*7+1);
-                output2 += "\n\nThe new spell is " + spells[turn2] + ".";
+                output2 += "\n\nThe new spell is " + spells[turn2] + "."; //Tells what the spell is
                 bonusYes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //Player accepts
                         String text;
                         if(currentSpell == 0){
+                            //If first time learning spell
                             text = "You have learnt the " + spells[turn2] + " spell.";
                         }else{
+                            //If replacing spell
                             text = "You have replaced your " + spells[currentSpell] + " spell with " + spells[turn2];
                         }
                         bonusMore.setText(text);
@@ -452,6 +481,7 @@ public class Game extends AppCompatActivity{
                 bonusYes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //They accepted the health potion
                         int turn = ((int)(Math.random()*10+1))*100;
                         health += turn;
                         String text = "You have added " + turn + " to your health, to bring it up to " + health;
@@ -463,6 +493,7 @@ public class Game extends AppCompatActivity{
                 setNoButton(moreNope);
                 break;
             default:
+                //Past the first three turns, a random box is created
                 turn = (int)(Math.random()*3+1);
                 bonusThing(turn);
                 return;
@@ -481,6 +512,7 @@ public class Game extends AppCompatActivity{
         bonusNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Sets the text that follows choosing to deny the bonus box
                 bonusMore.setText(text);
                 switchBonus();
             }
