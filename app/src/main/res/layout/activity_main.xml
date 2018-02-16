@@ -10,62 +10,70 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.tristan.textbasedgame.MainActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/opening_layout">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/battle_headings"
-            android:text="Welcome Adventurer.  What is your name?" />
+    <Button
+        android:id="@+id/play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Play"/>
 
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapWords"/>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--android:id="@+id/opening_layout">-->
 
-        <Button
-            android:id="@+id/namebutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/cont"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="@dimen/battle_headings"-->
+            <!--android:text="Welcome Adventurer.  What is your name?" />-->
 
-        <TextView
-            android:id="@+id/name_fail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="You need to enter a name"
-            android:paddingTop="10dp"
-            android:textColor="@color/red"
-            android:visibility="gone"/>
+        <!--<EditText-->
+            <!--android:id="@+id/name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="textCapWords"/>-->
 
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/namebutton"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:text="@string/cont"/>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/introduction"
-        android:visibility="gone">
+        <!--<TextView-->
+            <!--android:id="@+id/name_fail"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="You need to enter a name"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:textColor="@color/red"-->
+            <!--android:visibility="gone"/>-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/intro_speech"
-            android:textSize="@dimen/info_text"/>
+    <!--</LinearLayout>-->
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/gobutton"
-            android:text="Go!"/>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--android:id="@+id/introduction"-->
+        <!--android:visibility="gone">-->
 
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/intro_speech"-->
+            <!--android:textSize="@dimen/info_text"/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:id="@+id/gobutton"-->
+            <!--android:text="Go!"/>-->
+
+    <!--</LinearLayout>-->
 
 </RelativeLayout>
