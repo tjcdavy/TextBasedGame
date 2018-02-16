@@ -1,7 +1,9 @@
 package com.example.tristan.textbasedgame;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -572,6 +574,32 @@ public class Game extends AppCompatActivity{
             names[i] = enemy[i].name;
         }
         return names;
+    }
+
+    /**
+     * Creates popup if back button is pressed
+     */
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("Are you sure you wish to quit the game? (All progress will be lost)");
+
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Returns to the main Menu
+                finish();
+            }
+        });
+
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Closes the dialogue
+            }
+        });
+
+        alertDialog.create().show();
     }
 
 }

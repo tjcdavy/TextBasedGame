@@ -59,6 +59,7 @@ public class OpeningPage extends AppCompatActivity {
                 layout1.setVisibility(View.VISIBLE);
                 layout2.setVisibility(View.GONE);
                 nameField.setText("");
+                finish();
             }
         });
     }
